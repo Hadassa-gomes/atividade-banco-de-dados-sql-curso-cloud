@@ -1,0 +1,80 @@
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
+USE `mydb` ;
+
+-- -----------------------------------------------------
+-- Table `mydb`.`table1`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`table1` (
+)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`Cursos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`Cursos` (
+  `id_Cursos` INT NOT NULL,
+  `nome` VARCHAR(60) NOT NULL,
+  `email` VARCHAR(45) NOT NULL,
+  `id_instrutor` INT NOT NULL,
+  `Bio` VARCHAR(90) NOT NULL,
+  `data_inicio` DATE NOT NULL,
+  `data_fim` DATE NOT NULL,
+  `titulo` VARCHAR(70) NOT NULL,
+  `descricao` VARCHAR(250) NOT NULL,
+  PRIMARY KEY (`id_Cursos`, `id_instrutor`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`usuario`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`usuario` (
+  `id_Usuario` INT NOT NULL,
+  `nome` VARCHAR(60) NOT NULL,
+  `email` VARCHAR(45) NOT NULL,
+  `senha` INT NOT NULL,
+  `Cursos_id_Cursos` INT NOT NULL,
+  `Cursos_id_instrutor` INT NOT NULL,
+  PRIMARY KEY (`id_Usuario`),
+  INDEX `fk_usuario_Cursos1_idx` (`Cursos_id_Cursos` ASC, `Cursos_id_instrutor` ASC) VISIBLE,
+  CONSTRAINT `fk_usuario_Cursos1`
+    FOREIGN KEY (`Cursos_id_Cursos` , `Cursos_id_instrutor`)
+    REFERENCES `mydb`.`Cursos` (`id_Cursos` , `id_instrutor`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`Administrador`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`Administrador` (
+  `id_Administrador` INT NOT NULL,
+  `nome` VARCHAR(60) NOT NULL,
+  `senha` VARCHAR(45) NOT NULL,
+  `usuario_id_Usuario` INT NOT NULL,
+  PRIMARY KEY (`id_Administrador`),
+  INDEX `fk_Administrador_usuario_idx` (`usuario_id_Usuario` ASC) VISIBLE,
+  CONSTRAINT `fk_Administrador_usuario`
+    FOREIGN KEY (`usuario_id_Usuario`)
+    REFERENCES `mydb`.`usuario` (`id_Usuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
