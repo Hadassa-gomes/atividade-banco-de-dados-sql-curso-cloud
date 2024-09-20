@@ -1,0 +1,8 @@
+insert into usuario (nome, email, senha)
+value("Rosivaldo Alves de Souza", "ras@gmail.com", "74436" );
+
+insert into administrador (nome, senha)
+value("Joana Gomes da Silva", "jgs@gmail.com", "98663");
+
+insert into curso (nome, email, instrutor)
+value("Curso de Desenvolvimento Web", "anasouza@gmail.com", "Ana Souza")
